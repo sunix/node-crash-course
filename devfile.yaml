@@ -1,0 +1,30 @@
+apiVersion: 1.0.0
+metadata:
+  name: nodejs-cc-lesson3-
+
+components:
+  - id: che-incubator/typescript/latest
+    type: chePlugin
+    
+  - alias: node
+    type: dockerimage
+    image: node
+    mountSources: true
+    command: ['sleep', 'infinity']
+    memoryLimit: 512M
+
+  - alias: git
+    type: dockerimage
+    image: sunix/git-devtools
+    mountSources: true
+    memoryLimit: 64M
+    args: ['sleep', 'infinity']
+
+commands:
+
+  - name: node current_file
+    actions:
+      - workdir: ${fileDirname}
+        type: exec
+        command: set -o xtrace; node ${file}
+        component: node
